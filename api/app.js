@@ -4,11 +4,14 @@ require('dotenv').config();
 
 const app = express();
 
+//--DB--
+require("./config/db.config");
+
 //--MIDDLEWARES--
 app.use(express.json());
 app.use(logger('dev'));
 
-//--API ROUTES CONFIG--
+//--API ROUTES--
 const routes = require('./config/routes.config');
 app.use('/api/v1/', routes);
 
