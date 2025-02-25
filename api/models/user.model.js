@@ -6,7 +6,8 @@ const bcrypt = require("bcryptjs");
 const SALT_WORK_FACTOR = 10;
 
 //--Patterns--:
-const EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_PATTERN =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PASSWORD_PATTERN = /^.{8,}$/;
 const NAME_PATTERN = /^[a-zA-Z\s]+$/;
 
@@ -41,7 +42,11 @@ const userSchema = new mongoose.Schema(
       required: [true, "User password is required"],
       match: [PASSWORD_PATTERN, "Invalid user password pattern"],
     },
-    isAdmin: Boolean,
+    role: {
+      type: String,
+      enum: ["admin", "guess"],
+      default: "guess",
+    },
     avatar: {
       type: String,
       default: function () {
@@ -50,16 +55,10 @@ const userSchema = new mongoose.Schema(
       validate: {
         validator: isURL,
         message: function () {
-          return "Invalid poster URL";
+          return "Invalid avatar URL";
         },
       },
     },
-    allergies: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Ingredient",
-      },
-    ],
   },
   {
     timestamps: true,
@@ -90,6 +89,11 @@ userSchema.pre("save", function (next) {
     next();
   }
 });
+
+// Chech user password
+userSchema.methods.checkPassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

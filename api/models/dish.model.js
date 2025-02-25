@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { isURL } = require("../validators/string.validators");
 
-const disheschema = new mongoose.Schema(
+const dishSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -84,7 +84,7 @@ const disheschema = new mongoose.Schema(
   }
 );
 
-disheschema.virtual("reviews", {
+dishSchema.virtual("reviews", {
   ref: "Review",
   localField: "_id",
   foreignField: "dish",
