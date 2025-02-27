@@ -10,6 +10,7 @@ const EMAIL_PATTERN =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PASSWORD_PATTERN = /^.{8,}$/;
 const NAME_PATTERN = /^[a-zA-Z\s]+$/;
+const USERNAME_PATTERN = /^[a-zA-Z0-9]+$/;
 
 const userSchema = new mongoose.Schema(
   {
@@ -36,6 +37,17 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: [true, "User email is required"],
       match: [EMAIL_PATTERN, "Invalid user email pattern"],
+    },
+    username: {
+      type: String,
+      required: [true, "Username is required"],
+      unique: true,
+      lowercase: true,
+      minLength: [3, "Username must be at least 3 characters long"],
+      maxLength: [20, "Username characters cannot exceed 20 characters"],
+      trim: true,
+      match: [USERNAME_PATTERN, "Username can only contain letters, numbers, and underscores, with no spaces",
+      ],
     },
     password: {
       type: String,
