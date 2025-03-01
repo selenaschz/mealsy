@@ -29,8 +29,8 @@ router.delete("/sessions", auth.isAuthenticated, sessions.destroy)
 // Reviews
 router.post("/dishes/:id/reviews", auth.isAuthenticated, dishes.createReview);
 router.get("/dishes/:id/reviews", auth.isAuthenticated, dishes.listReviews);
-router.delete("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.deleteReview);
-router.patch("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.updateReview);
+router.delete("/reviews/:reviewId", auth.isAuthenticated, auth.isReviewCreator, dishes.deleteReview);
+router.patch("/reviews/:reviewId", auth.isAuthenticated, auth.isReviewCreator, dishes.updateReview);
 
 // Plans
 router.get("/plans/random", auth.isAuthenticated, plans.random);

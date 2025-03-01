@@ -22,7 +22,6 @@ module.exports.create = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-
 module.exports.delete = (req, res, next) => {
   const { id } = req.params;
   Dish.findByIdAndDelete(id)
@@ -32,7 +31,6 @@ module.exports.delete = (req, res, next) => {
     })
     .catch((error) => next(error));
 };
-
 
 module.exports.update = (req, res, next) => {
   const { id } = req.params;
@@ -58,7 +56,6 @@ module.exports.update = (req, res, next) => {
     })
     .catch((error) => next(error));
 };
-
 
 module.exports.list = (req, res, next) => {
   // Query params:
@@ -104,14 +101,13 @@ module.exports.list = (req, res, next) => {
 
   // Find dishes filtering by criterials
   Dish.find(criterial)
-    .sort({ [sort]: "asc" }) 
-    .limit(Number(limit)) 
-    .skip(Number(limit) * page) 
+    .sort({ [sort]: "asc" })
+    .limit(Number(limit))
+    .skip(Number(limit) * page)
     .populate("reviews") // Dish virtual reviews field
     .then((dishes) => res.json(dishes))
     .catch((error) => next(error));
 };
-
 
 module.exports.detail = (req, res, next) => {
   const { id } = req.params;
@@ -124,36 +120,37 @@ module.exports.detail = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-
 //-- Review--
 // Create review
 module.exports.createReview = (req, res, next) => {
+  const { text, rating } = req.body;
+  const user = req.user.id;
+  const dish = req.params.id;
+
   Review.create({
-    text: req.body.text,
-    rating: req.body.rating,
-    user: req.body.user,
-    dish: req.params.id,
+    text,
+    rating,
+    user,
+    dish,
   })
     .then((review) => res.status(201).json(review))
     .catch(next);
 };
 
-
 // List reviews
 module.exports.listReviews = (req, res, next) => {
-  const { dishId } = req.params;
+  const { id } = req.params;
 
-  Review.find({ dish: dishId })
+  Review.find({ dish: id })
     .populate("user")
     .populate("dish")
     .then((reviews) => res.status(200).json(reviews))
     .catch(next);
 };
 
-
 // Update review
 module.exports.updateReview = (req, res, next) => {
-  const { id } = req.params;
+  const { reviewId } = req.params;
   const { body } = req;
 
   const permittedParams = ["text", "rating"];
@@ -162,22 +159,24 @@ module.exports.updateReview = (req, res, next) => {
     if (!permittedParams.includes(key)) delete body[key];
   });
 
-  Review.findByIdAndUpdate(id, body, { runValidators: true, new: true })
+  Review.findByIdAndUpdate(reviewId, body, { runValidators: true, new: true })
     .then((review) => {
-      if (!review) next(this.createError(404, "Review not found"));
+      console.log(review)
+      if (!review) return next(createError(404, "Review not found"));
       else res.status(201).json(review);
     })
     .catch(next);
 };
 
-
-// Delete review
 module.exports.deleteReview = (req, res, next) => {
-  const { id } = req.params;
-  Dish.findByIdAndDelete(id)
+  const { reviewId } = req.params;
+
+  Review.findByIdAndDelete(reviewId)
     .then((review) => {
-      if (!review) next(createError(404, "Review not found"));
-      else res.status(204).send();
+      if (!review) {
+        return next(createError(404, "Review not found"));
+      }
+      res.status(204).send();
     })
-    .catch((error) => next(error));
+    .catch(next);
 };
