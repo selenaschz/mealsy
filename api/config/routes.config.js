@@ -3,8 +3,7 @@ const router = express.Router();
 const createError = require("http-errors");
 const dishes = require("../controllers/dishes.controller");
 const users = require("../controllers/users.controller");
-const ingredients = require("../controllers/ingredients.controller");
-//const plans = require("../controllers/plans.controller");
+const plans = require("../controllers/plans.controller");
 const mongoose = require("mongoose");
 const sessions = require("../controllers/sessions.controller");
 const auth = require("../middlewares/session.middleware");
@@ -33,14 +32,12 @@ router.get("/dishes/:id/reviews", auth.isAuthenticated, dishes.listReviews);
 router.delete("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.deleteReview);
 router.patch("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.updateReview);
 
-// Ingredients
-router.get("/ingredients", auth.isAuthenticated, auth.isAdmin, ingredients.list);         
-router.post("/ingredients", auth.isAuthenticated, auth.isAdmin, ingredients.create);      
-router.get("/ingredients/:id", auth.isAuthenticated, ingredients.detail);   
-router.patch("/ingredients/:id", auth.isAuthenticated, auth.isAdmin, ingredients.update); 
-router.delete("/ingredients/:id",auth.isAuthenticated, auth.isAdmin, ingredients.delete);
-
-
+// Plans
+router.get("/plans/random", auth.isAuthenticated, plans.random);
+router.get("/plans", auth.isAuthenticated, plans.list);
+router.post("/plans", auth.isAuthenticated, plans.create);
+router.get("/plans/:id", auth.isAuthenticated, plans.detail);
+router.delete("/plans/:id", auth.isAuthenticated, plans.delete);
 
 
 //--Errors--

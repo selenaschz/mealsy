@@ -7,19 +7,28 @@ const dishSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
       trim: true,
+      unique: true,
       minLength: [3, "Name must be at least 3 characters"],
       maxLength: [80, "Name must be less than 80 characters"],
     },
     ingredients: [
       {
         ingredient: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Ingredient",
+          type: String,
           required: [true, "Ingredient is required"],
+          trim: true,
         },
         quantity: {
           type: Number,
           required: [true, "Quantity is required"],
+          min: [1, "Quantity must be at least 1"],
+          max: [1000, "Quantity must be less than 1000"],
+        },
+        unit: {
+          type: String,
+          required: [true, "Unit is required"],
+          enum: ["g", "kg", "ml", "l", "cups", "tbsp", "tsp", "units"], 
+          message: "Unit must be one of the predefined units",
         },
       },
     ],
@@ -33,6 +42,31 @@ const dishSchema = new mongoose.Schema(
       type: Number,
       min: [1, "Duration must be at least 1 minute"],
       max: [240, "Duration must be less than 240 minutes"], // 4h
+    },
+    cuisine: {
+      type: String,
+      enum: [
+        "Italian",
+        "Mexican",
+        "Chinese",
+        "Indian",
+        "Japanese",
+        "American",
+        "French",
+        "Mediterranean",
+        "Middle Eastern",
+        "Thai",
+        "Greek",
+        "Spanish",
+        "Vietnamese",
+        "Turkish",
+        "Korean",
+        "African",
+        "Caribbean",
+        "German",
+        "Brazilian",
+        "Ethiopian",
+      ],
     },
     instructions: {
       type: [String],
@@ -91,5 +125,5 @@ dishSchema.virtual("reviews", {
   justOne: false,
 });
 
-const dish = mongoose.model("dish", dishSchema);
+const dish = mongoose.model("Dish", dishSchema);
 module.exports = dish;
