@@ -6,6 +6,7 @@ const ingredientSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
       trim: true,
+      unique: true
     },
     category: {
       type: String,

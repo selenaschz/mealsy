@@ -4,35 +4,41 @@ const createError = require("http-errors");
 const dishes = require("../controllers/dishes.controller");
 const users = require("../controllers/users.controller");
 const ingredients = require("../controllers/ingredients.controller");
-const plans = require("../controllers/plans.controller");
+//const plans = require("../controllers/plans.controller");
 const mongoose = require("mongoose");
+const sessions = require("../controllers/sessions.controller");
+const auth = require("../middlewares/session.middleware");
 
 
 //--ROUTES--
 // Dishes
-router.get("/dishes", dishes.list);
-router.post("/dishes", dishes.create);
-router.get("/dishes/:id", dishes.detail);
-router.delete("/dishes/:id", dishes.delete);
-router.patch("/dishes/:id", dishes.update);
+router.get("/dishes", auth.isAuthenticated, dishes.list);
+router.post("/dishes", auth.isAuthenticated, auth.isAdmin, dishes.create);
+router.get("/dishes/:id", auth.isAuthenticated, dishes.detail);
+router.delete("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.delete);
+router.patch("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.update);
 
 // Users
 router.post("/users", users.create);
-router.patch("/users/:username", users.update);
-router.get("/users/:username", users.profile);
+router.patch("/users/", auth.isAuthenticated, users.update);
+router.get("/users/:username", auth.isAuthenticated, users.profile);
+
+// Sessions
+router.post("/sessions", sessions.create);
+router.delete("/sessions", auth.isAuthenticated, sessions.destroy)
 
 // Reviews
-router.post("/dishes/:id/reviews", dishes.createReview);
-router.get("/dishes/:id/reviews", dishes.listReviews);
-router.delete("/dishes/:id/reviews/:reviewId", dishes.deleteReview);
-router.patch("/dishes/:id/reviews/:reviewId", dishes.updateReview);
+router.post("/dishes/:id/reviews", auth.isAuthenticated, dishes.createReview);
+router.get("/dishes/:id/reviews", auth.isAuthenticated, dishes.listReviews);
+router.delete("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.deleteReview);
+router.patch("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.updateReview);
 
 // Ingredients
-router.get("/ingredients", ingredients.list);         
-router.post("/ingredients", ingredients.create);      
-router.get("/ingredients/:id", ingredients.detail);   
-router.patch("/ingredients/:id", ingredients.update); 
-router.delete("/ingredients/:id", ingredients.delete);
+router.get("/ingredients", auth.isAuthenticated, auth.isAdmin, ingredients.list);         
+router.post("/ingredients", auth.isAuthenticated, auth.isAdmin, ingredients.create);      
+router.get("/ingredients/:id", auth.isAuthenticated, ingredients.detail);   
+router.patch("/ingredients/:id", auth.isAuthenticated, auth.isAdmin, ingredients.update); 
+router.delete("/ingredients/:id",auth.isAuthenticated, auth.isAdmin, ingredients.delete);
 
 
 

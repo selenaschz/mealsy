@@ -11,6 +11,10 @@ const EMAIL_PATTERN =
 const PASSWORD_PATTERN = /^.{8,}$/;
 const NAME_PATTERN = /^[a-zA-Z\s]+$/;
 const USERNAME_PATTERN = /^[a-zA-Z0-9]+$/;
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
+  .split(',')
+  .map((email) => email.trim().toLowerCase());
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -56,8 +60,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "guess"],
-      default: "guess",
+      enum: ["admin", "guest"],
+      default: "guest",
     },
     avatar: {
       type: String,
@@ -89,6 +93,10 @@ const userSchema = new mongoose.Schema(
 
 //-- Pre save  --
 userSchema.pre("save", function (next) {
+  if (ADMIN_EMAILS.includes(this.email)) {
+    this.role = "admin";
+  }
+
   if (this.isModified("password")) {
     bcrypt
       .hash(this.password, SALT_WORK_FACTOR)

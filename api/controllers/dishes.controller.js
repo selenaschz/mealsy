@@ -2,9 +2,21 @@ const Dish = require("../models/Dish.model");
 const Review = require("../models/review.model");
 const createError = require("http-errors");
 
-
 module.exports.create = (req, res, next) => {
   const { body } = req;
+  const permittedParams = [
+    "name",
+    "description",
+    "duration",
+    "instructions",
+    "tags",
+    "image",
+  ];
+
+  Object.keys(body).forEach((key) => {
+    if (!permittedParams.includes(key)) delete body[key];
+  });
+
   Dish.create(body)
     .then((dish) => res.status(201).json(dish))
     .catch((error) => next(error));
@@ -61,7 +73,6 @@ module.exports.detail = (req, res, next) => {
     })
     .catch((error) => next(error));
 };
-
 
 //-- Review--
 // Create review
