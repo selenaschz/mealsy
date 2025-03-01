@@ -1,5 +1,7 @@
 const createError = require("http-errors");
 const User = require("../models/user.model");
+const mongoose = require("mongoose");
+
 
 module.exports.create = (req, res, next) => {
   const { email } = req.body;
@@ -17,6 +19,7 @@ module.exports.create = (req, res, next) => {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
+          username: req.body.username,
           password: req.body.password,
           role: req.body.name,
           avatar: req.file?.path,
@@ -29,34 +32,41 @@ module.exports.create = (req, res, next) => {
 };
 
 module.exports.update = (req, res, next) => {
-  const permittedBody = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    avatar: req.file?.path,
-  };
+  const { username } = req.params; 
 
-  // Remove -> Undefined Keys
-  Object.keys(permittedBody).forEach((key) => {
-    if (permittedBody[key] === undefined) {
-      delete permittedBody[key];
-    }
-  });
+  User.findOne({ username })  
+    .then((user) => {
+      if (!user) {
+        return next(createError(404, "User not found"));
+      }
 
-  // Merge -> Body into req.user
-  Object.assign(req.user, permittedBody);
+      const permittedBody = {
+        firstName: req.body?.firstName,
+        lastName: req.body?.lastName,
+        email: req.body?.email,
+        password: req.body?.password,
+        avatar: req.file?.path,
+      };
 
-  req.user
-    .save()
-    .then((user) => res.json(user))
+      Object.keys(permittedBody).forEach((key) => {
+        if (permittedBody[key] === undefined) {
+          delete permittedBody[key];
+        }
+      });
+
+      Object.assign(user, permittedBody);
+
+      return user.save();
+    })
+    .then((updatedUser) => res.json(updatedUser))
     .catch(next);
 };
 
-module.exports.profile = (req, res, next) => {
-  const { email } = req.params;
 
-  User.findOne({ email })
+module.exports.profile = (req, res, next) => {
+  const { username } = req.params;
+
+  User.findOne({ username })
     .then((user) => {
       if (!user) {
         return next(createError(404, "User not found"));

@@ -1,29 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const createError = require("http-errors");
-const dishes = require("../controllers/dish.controller");
+const dishes = require("../controllers/dishes.controller");
 const users = require("../controllers/users.controller");
 const ingredients = require("../controllers/ingredients.controller");
 const plans = require("../controllers/plans.controller");
+const mongoose = require("mongoose");
+
 
 //--ROUTES--
 // Dishes
-router.get("/dishes", auth.isAuthenticated, dishes.list);
-router.post("/dishes", auth.isAuthenticated, auth.isAdmin, dishes.create);
+router.get("/dishes", dishes.list);
+router.post("/dishes", dishes.create);
 router.get("/dishes/:id", dishes.detail);
-router.delete("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.delete);
-router.patch("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.update);
+router.delete("/dishes/:id", dishes.delete);
+router.patch("/dishes/:id", dishes.update);
 
 // Users
 router.post("/users", users.create);
-router.patch("/users/:username", auth.isAuthenticated, users.update);
+router.patch("/users/:username", users.update);
 router.get("/users/:username", users.profile);
 
 // Reviews
-router.post("/dishes/:id/reviews", auth.isAuthenticated, dishes.createReview);
-router.get("/dishes/:id/reviews", auth.isAuthenticated, dishes.listReviews);
-router.delete("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.deleteReview);
-router.patch("/dishes/:id/reviews/:reviewId", auth.isAuthenticated, dishes.updateReview);
+router.post("/dishes/:id/reviews", dishes.createReview);
+router.get("/dishes/:id/reviews", dishes.listReviews);
+router.delete("/dishes/:id/reviews/:reviewId", dishes.deleteReview);
+router.patch("/dishes/:id/reviews/:reviewId", dishes.updateReview);
+
+// Ingredients
+router.get("/ingredients", ingredients.list);         
+router.post("/ingredients", ingredients.create);      
+router.get("/ingredients/:id", ingredients.detail);   
+router.patch("/ingredients/:id", ingredients.update); 
+router.delete("/ingredients/:id", ingredients.delete);
+
 
 
 

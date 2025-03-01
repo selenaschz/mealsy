@@ -91,5 +91,5 @@ dishSchema.virtual("reviews", {
   justOne: false,
 });
 
-const dish = mongoose.model("dish", disheschema);
+const dish = mongoose.model("dish", dishSchema);
 module.exports = dish;

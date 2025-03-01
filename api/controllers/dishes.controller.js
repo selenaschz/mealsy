@@ -1,5 +1,7 @@
 const Dish = require("../models/Dish.model");
-const Review = require ("../models/review.model");
+const Review = require("../models/review.model");
+const createError = require("http-errors");
+
 
 module.exports.create = (req, res, next) => {
   const { body } = req;
@@ -23,7 +25,12 @@ module.exports.update = (req, res, next) => {
   const { body } = req;
 
   const permittedParams = [
-        //TODO
+    "name",
+    "description",
+    "duration",
+    "instructions",
+    "tags",
+    "image",
   ];
 
   Object.keys(body).forEach((key) => {
@@ -38,19 +45,36 @@ module.exports.update = (req, res, next) => {
     .catch((error) => next(error));
 };
 
+module.exports.list = (req, res, next) => {
+  Dish.find()
+    .then((dishes) => res.json(dishes))
+    .catch((error) => next(error));
+};
+
+module.exports.detail = (req, res, next) => {
+  const { id } = req.params;
+
+  Dish.findById(id)
+    .then((dish) => {
+      if (!dish) next(createError(404, "Dish not found"));
+      else res.json(dish);
+    })
+    .catch((error) => next(error));
+};
+
+
 //-- Review--
 // Create review
 module.exports.createReview = (req, res, next) => {
   Review.create({
-      text: req.body.text,
-      rating: req.body.rating,
-      user: req.body.user,
-      dish: req.params.id
+    text: req.body.text,
+    rating: req.body.rating,
+    user: req.body.user,
+    dish: req.params.id,
   })
-      .then((review) => res.status(201).json(review))
-      .catch(next);
+    .then((review) => res.status(201).json(review))
+    .catch(next);
 };
-
 
 // List reviews
 module.exports.listReviews = (req, res, next) => {
@@ -71,16 +95,16 @@ module.exports.updateReview = (req, res, next) => {
   const permittedParams = ["text", "rating"];
 
   Object.keys(body).forEach((key) => {
-      if (!permittedParams.includes(key)) delete body[key];
-  })
+    if (!permittedParams.includes(key)) delete body[key];
+  });
 
-  Review.findByIdAndUpdate(id, body, {runValidators: true, new: true})
-  .then((review) => {
-      if(!review) next(this.createError(404, "Review not found"));
+  Review.findByIdAndUpdate(id, body, { runValidators: true, new: true })
+    .then((review) => {
+      if (!review) next(this.createError(404, "Review not found"));
       else res.status(201).json(review);
-  })
-  .catch(next)
-}
+    })
+    .catch(next);
+};
 
 // Delete review
 module.exports.deleteReview = (req, res, next) => {
@@ -92,4 +116,3 @@ module.exports.deleteReview = (req, res, next) => {
     })
     .catch((error) => next(error));
 };
-
