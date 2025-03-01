@@ -91,6 +91,12 @@ const dishSchema = new mongoose.Schema(
         "quick",
       ],
     },
+    calories: {
+      type: Number,
+      required: [true, "Calories are required"],
+      min: [1, "Calories must be at least 1"],
+      max: [5000, "Calories must be less than 5000"],
+    },
     image: {
       type: String,
       trim: true,

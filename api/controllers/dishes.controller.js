@@ -9,6 +9,8 @@ module.exports.create = (req, res, next) => {
     "description",
     "duration",
     "instructions",
+    "ingredients",
+    "calories",
     "tags",
     "image",
   ];
@@ -40,6 +42,8 @@ module.exports.update = (req, res, next) => {
     "name",
     "description",
     "duration",
+    "ingredients",
+    "calories",
     "instructions",
     "tags",
     "image",
@@ -67,6 +71,8 @@ module.exports.list = (req, res, next) => {
     cuisine,
     tags,
     ingredients,
+    caloriesMin,
+    caloriesMax,
     duration,
   } = req.query;
 
@@ -97,6 +103,12 @@ module.exports.list = (req, res, next) => {
   if (ingredients) {
     const ingredientsList = ingredients.split(","); // to array
     criterial["ingredients.ingredient"] = { $in: ingredientsList };
+  }
+  
+  if (caloriesMin || caloriesMax) {
+    criterial.calories = {};
+    if (caloriesMin) criterial.calories.$gte = Number(caloriesMin); 
+    if (caloriesMax) criterial.calories.$lte = Number(caloriesMax);
   }
 
   // Find dishes filtering by criterials
