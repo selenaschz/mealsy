@@ -7,6 +7,7 @@ const plans = require("../controllers/plans.controller");
 const mongoose = require("mongoose");
 const sessions = require("../controllers/sessions.controller");
 const auth = require("../middlewares/session.middleware");
+const storage = require("../config/storage.config")
 
 
 //--ROUTES--
@@ -18,7 +19,7 @@ router.delete("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.delete);
 router.patch("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.update);
 
 // Users
-router.post("/users", users.create);
+router.post("/users", storage.single("avatar"), users.create);
 router.patch("/users/:username", auth.isAuthenticated, users.update);
 router.get("/users/:username", auth.isAuthenticated, users.profile);
 
