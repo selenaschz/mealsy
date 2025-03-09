@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className="px-16">Footer</div>
   )
 }
 

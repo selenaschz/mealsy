@@ -2,24 +2,87 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="bg-[#7F5539] border-b border-[#9C6644] shadow-md">
-      <div className="w-full flex flex-wrap items-center justify-between px-6 p-2">
+    <nav className="bg-brown-dark border-b border-brown-medium shadow-md">
+      <div className="w-full flex items-center justify-between md:px-16 p-2">
+        {/* Small screen Menu*/}
+        <button
+          data-collapse-toggle="navbar-user"
+          type="button"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-beige-light rounded-lg md:hidden hover:bg-brown-medium focus:outline-none focus:ring-2 focus:ring-brown-light"
+          aria-controls="navbar-user"
+          aria-expanded="false"
+        >
+          <span className="sr-only">Open main menu</span>
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+        {/* Menu */}
+        <div className="flex flex-grow justify-start">
+          <ul className="hidden md:flex font-medium space-x-6">
+            <li>
+              <Link
+                to="/dishes"
+                className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
+              >
+                Dishes
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/planner"
+                className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
+              >
+                Meal Planner
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/planner"
+                className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
+              >
+                Surprise Meal
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
+              >
+                About
+              </Link>
+            </li>
+          </ul>
+        </div>
+
         {/* Logo */}
-        <Link to="/">
-          <img src="/public/logo.png" className="h-20" alt="Mealsy Logo" />
+        <Link to="/" className="flex flex-grow justify-center">
+          <img src="/images/logo.png" className="h-12 md:h-20 me-5" alt="Mealsy Logo" />
         </Link>
 
-        {/* User Menu */}
-        <div className="flex items-center md:order-2 space-x-3 md:space-x-4 rtl:space-x-reverse">
+        {/* Search and User profile */}
+        <div className="flex flex-grow justify-end items-center space-x-4">
           <input
             type="text"
             id="search-navbar"
-            className="block w-64 p-2 ps-10 text-sm text-[#7F5539] border border-[#DDB892] rounded-lg bg-[#E6CCB2] focus:ring-2 focus:ring-[#B08968] focus:outline-none focus:border-[#DDB892] dark:bg-[#EDE0D4] dark:border-[#9C6644] dark:text-[#7F5539] dark:focus:ring-[#B08968] dark:focus:border-[#DDB892]"
+            className="block w-16 md:w-64 p-2 ps-10 text-sm text-brown-dark border border-beige-medium rounded-lg bg-beige-warm focus:ring-2 focus:ring-brown-light focus:outline-none focus:border-beige-medium dark:bg-beige-light dark:border-brown-medium dark:text-brown-dark dark:focus:ring-brown-light dark:focus:border-beige-medium"
             placeholder="Search..."
           />
           <button
             type="button"
-            className="flex text-sm bg-[#9C6644] rounded-full md:me-0 focus:ring-4 focus:ring-[#B08968]"
+            className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="user-dropdown"
@@ -27,7 +90,7 @@ function Navbar() {
           >
             <span className="sr-only">Open user menu</span>
             <img
-              className="w-16 h-16 rounded-full"
+              className="w-10 h-10 md:w-16 md:h-16 rounded-full"
               src="https://i.pinimg.com/736x/80/61/f2/8061f2ea2fa12cf52ce04fb9e9d34d07.jpg"
               alt="user photo"
             />
@@ -35,14 +98,14 @@ function Navbar() {
 
           {/* Dropdown */}
           <div
-            className="z-50 hidden my-4 text-base list-none bg-[#EDE0D4] divide-y divide-[#DDB892] rounded-lg shadow-md"
+            className="z-50 hidden my-4 text-base list-none bg-beige-light divide-y divide-beige-medium rounded-lg shadow-md"
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-sm text-[#7F5539] font-semibold">
+              <span className="block text-sm text-brown-dark font-semibold">
                 {/*Me falta poner Nombre*/}
               </span>
-              <span className="block text-sm text-[#9C6644] truncate">
+              <span className="block text-sm text-brown-medium truncate">
                 {/*Falta Correo*/}
               </span>
             </div>
@@ -51,7 +114,7 @@ function Navbar() {
                 <li key={item}>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-[#7F5539] hover:bg-[#DDB892] hover:text-[#EDE0D4] rounded"
+                    className="block px-4 py-2 text-sm text-brown-dark hover:bg-beige-medium hover:text-beige-light rounded"
                   >
                     {item}
                   </a>
@@ -59,57 +122,6 @@ function Navbar() {
               ))}
             </ul>
           </div>
-
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-[#EDE0D4] rounded-lg md:hidden hover:bg-[#9C6644] focus:outline-none focus:ring-2 focus:ring-[#B08968]"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-user"
-        >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 md:space-x-14 rtl:space-x-reverse md:flex-row md:mt-0">
-            <li>
-              <Link to ="/dishes" 
-                className="block py-2 px-3 text-[#EDE0D4] rounded-sm md:bg-transparent md:hover:text-[#DDB892] md:p-0 transition-colors duration-300">
-                Dishes
-              </Link>
-            </li>
-            <li>
-              <Link to="/planner"
-                className="block py-2 px-3 text-[#EDE0D4] rounded-sm md:bg-transparent md:hover:text-[#DDB892] md:p-0 transition-colors duration-300">
-                Meal Planner
-              </Link>
-            </li>
-            <li>
-              <Link to="/about"
-                className="block py-2 px-3 text-[#EDE0D4] rounded-sm md:bg-transparent md:hover:text-[#DDB892] md:p-0 transition-colors duration-300">
-                About
-              </Link>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>

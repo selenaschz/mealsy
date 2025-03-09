@@ -1,7 +1,12 @@
+import { PageLayout } from "../components/layouts/index";
+import { LoginForm } from "../components/users";
+
 function LoginPage() {
   return (
-    <div>LoginPage</div>
-  )
+    <PageLayout>
+      <LoginForm />
+    </PageLayout>
+  );
 }
 
-export default LoginPage
+export default LoginPage;

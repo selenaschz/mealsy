@@ -1,1 +1,24 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@font-face {
+    font-family: "BohemianFashion";
+    src: url("/fonts/Bohemian\ Fashion.woff2") format('woff2'), 
+         url("/fonts//Bohemian\ Fashion.woff") format('woff'); 
+    font-weight: normal;
+    font-style: normal;
+  }
+
+ 
+@theme {
+    --color-beige-light: #EDE0D4;
+    --color-beige-warm: #E6CCB2;
+    --color-beige-medium: #DDB892;
+    --color-brown-dark: #7F5539;
+    --color-brown-medium: #9C6644;
+    --color-brown-light: #B08968;
+
+    --font-heading: 'BohemianFashion', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
