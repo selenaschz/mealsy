@@ -1,0 +1,7 @@
+export { default as DishDetailPage} from "./dish-detail"
+export { default as DishesPage } from "./dishes"
+export { default as HomePage } from "./home"
+export { default as LoginPage } from "./login"
+export { default as MealPlannerPage } from "./meal-planner"
+export { default as ProfilePage } from "./profile"
+export { default as RegisterPage } from "./register"

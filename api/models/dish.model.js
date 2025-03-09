@@ -16,6 +16,7 @@ const dishSchema = new mongoose.Schema(
         ingredient: {
           type: String,
           required: [true, "Ingredient is required"],
+          lowercase: true,
           trim: true,
         },
         quantity: {
@@ -41,10 +42,11 @@ const dishSchema = new mongoose.Schema(
     duration: {
       type: Number,
       min: [1, "Duration must be at least 1 minute"],
-      max: [240, "Duration must be less than 240 minutes"], // 4h
+      max: [600, "Duration must be less than 10 hours (600 minutes)"], //10h
     },
     cuisine: {
       type: String,
+      lowercase: true,
       enum: [
         "Italian",
         "Mexican",

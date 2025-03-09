@@ -12,6 +12,7 @@ const planSchema = new Schema(
       {
         day: {
           type: String,
+          lowercase: true,
           enum: [
             "monday",
             "tuesday",

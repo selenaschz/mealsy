@@ -58,19 +58,14 @@ module.exports.detail = (req, res, next) => {
 
 // Get random plan (predifined plan)
 module.exports.random = (req, res, next) => {
-    console.log("Recibiendo solicitud para obtener plan aleatorio...");
   Plan.aggregate([{ $match: { predefined: true } }, { $sample: { size: 1 } }])
-  
     .then((plan) => {
-        console.log(plan + "encontrado")
       if (plan.length === 0) {
         next(createError(404, "No predefined plans found"));
       } else {
-        console.log("no se encontro nada ")
         res.json(plan[0]);
       }
     })
     .catch((error) => {n
-        console.log("Plan encontrado:", plan); 
         next(error)});
 };
