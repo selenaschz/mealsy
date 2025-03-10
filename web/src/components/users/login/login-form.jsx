@@ -2,15 +2,11 @@ import { useForm } from "react-hook-form";
 import * as MealsyAPI from "../../../services/api-service";
 import { useAuthContext } from "../../../contexts/auth-context";
 import { Link, useNavigate } from "react-router-dom";
-import InputField from "../../ui/input-field/input-field";
+import InputField from "../../ui/inputs/input-field";
+import FormButton from "../../ui/buttons/form-button";
 
 function LoginForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm();
+  const { register, handleSubmit, formState: { errors }, setError, } = useForm();
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
@@ -35,8 +31,7 @@ function LoginForm() {
   return (
     <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-sm mx-auto">
       <h2 className="pb-3 text-center font-heading text-8xl text-brown-dark">
-        {" "}
-        Login{" "}
+        Login
       </h2>
       <form onSubmit={handleSubmit(handleLogin)} data-testid="login-form">
         <InputField
@@ -57,12 +52,7 @@ function LoginForm() {
           errors={errors.password}
         />
         <div className="d-grid mb-6">
-          <button
-            className="bg-brown-light text-beige-light hover:bg-brown-medium rounded-lg w-full py-2 focus:ring-4 focus:ring-brown-light"
-            type="submit"
-          >
-            Login
-          </button>
+          <FormButton text="Login"/>
         </div>
       </form>
       <div className="text-center mt-4">

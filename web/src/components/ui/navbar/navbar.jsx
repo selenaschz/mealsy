@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
+  const location = useLocation(); // Obtener la ubicación actual de la ruta
+
+  // Verificar si estamos en la página de inicio (landpage/home)
+  const isHomePage = location.pathname === '/';
+
   return (
-    <nav className="bg-brown-dark border-b border-brown-medium shadow-md">
+    <nav className={`${isHomePage ? 'absolute bg-transparent' : 'relative bg-brown-dark border-brown-medium shadow-md'} z-10 w-full fixed`}>
       <div className="w-full flex items-center justify-between md:px-16 p-2">
         {/* Small screen Menu*/}
         <button
@@ -29,6 +34,7 @@ function Navbar() {
             />
           </svg>
         </button>
+
         {/* Menu */}
         <div className="flex flex-grow justify-start">
           <ul className="hidden md:flex font-medium space-x-6">
@@ -69,7 +75,7 @@ function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="flex flex-grow justify-center">
-          <img src="/images/logo.png" className="h-12 md:h-20 me-5" alt="Mealsy Logo" />
+          <img src="/images/logo.png" className={`h-12 md:${isHomePage ? "h-24 mt-2" : "h-20"} me-5`} alt="Mealsy Logo" />
         </Link>
 
         {/* Search and User profile */}
