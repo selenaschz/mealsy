@@ -4,7 +4,8 @@ import { profile } from "../services/api-service";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  //const [user, setUser] = useState(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState()
 
   useEffect(() => {
     profile()
@@ -13,10 +14,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   function login(user) {
+    //localStorage.setItem("user", JSON.stringify(user));
     setUser(user);
   }
 
   function logout() {
+    //localStorage.removeItem("user");
     setUser(null);
   }
 

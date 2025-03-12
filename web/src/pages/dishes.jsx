@@ -1,7 +1,12 @@
+import DishList from "../components/dishes/dish-list/dish-list";
+import { PageLayout } from "../components/layouts";
+
 function DishesPage() {
   return (
-    <div>Dishes</div>
-  )
+    <PageLayout>
+      <DishList max={10} />
+    </PageLayout>
+  );
 }
 
-export default DishesPage
+export default DishesPage;

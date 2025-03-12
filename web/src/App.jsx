@@ -4,10 +4,9 @@ import {
   HomePage,
   RegisterPage,
   LoginPage,
-  DishDetailPage,
   DishesPage,
+  DishPage,
   MealPlannerPage,
-  ProfilePage,
   AboutPage,
 } from "./pages";
 
@@ -21,12 +20,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/dishes/:id" element={<DishPage />} />
         <Route
           path="/dishes"
           element={
-            <PrivateRoute>
               <DishesPage />
-            </PrivateRoute>
           }
         />
         <Route
@@ -42,14 +40,6 @@ function App() {
           element={
             <PrivateRoute>
               <AboutPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/dish"
-          element={
-            <PrivateRoute>
-              <DishDetailPage />
             </PrivateRoute>
           }
         />

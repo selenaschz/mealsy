@@ -9,6 +9,12 @@ http.interceptors.response.use(
   (response) => response.data,
   (error) => {
     return Promise.reject(error);
+    /* if (error.reponse?.status === 401 &&
+      window.location.pathname !== "/login") {
+        localStorage.removeItem("user");
+        window.location.assign("/login");
+      }
+    }*/
   }
 );
 
@@ -23,23 +29,14 @@ const login = (user) => http.post("/sessions", user);
 const logout = () => http.delete("/sessions");
 
 // Dishes 
-const listDishes = ({
-  limit,
-  page,
-  cuisine,
-  tags,
-  ingredients,
-  caloriesMin,
-  caloriesMax,
-  duration,
-}) => {
-  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 10 : limit;
-  page = Number.isNaN(Number(page)) || Number(page) <= 0 ? 1 : page;
+const listDishes = ({ limit, page, cuisine, tags, ingredients, caloriesMin, caloriesMax, duration }) => {
+  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 20 : limit;
+  page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
 
   const tagList = tags ? tags.join(",") : "";
   const ingredientsList = ingredients ? ingredients.join(",") : "";
 
-  return axios.get("/dishes", {
+  return http.get("/dishes", {
     params: {
       limit,
       page,

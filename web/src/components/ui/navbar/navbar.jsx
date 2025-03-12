@@ -1,13 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/auth-context";
 
 function Navbar() {
-  const location = useLocation(); // Obtener la ubicación actual de la ruta
-
-  // Verificar si estamos en la página de inicio (landpage/home)
-  const isHomePage = location.pathname === '/';
+  const location = useLocation();
+  // Verifico si estamos en la página de inicio (landpage/home)
+  const isHomePage = location.pathname === "/";
+  const { user } = useAuthContext()
 
   return (
-    <nav className={`${isHomePage ? 'absolute bg-transparent' : 'relative bg-brown-dark border-brown-medium shadow-md'} z-10 w-full fixed`}>
+    <nav
+      className={`${
+        isHomePage
+          ? "absolute bg-transparent"
+          : "relative bg-brown-dark border-brown-medium shadow-md"
+      } z-10 w-full fixed`}
+    >
       <div className="w-full flex items-center justify-between md:px-16 p-2">
         {/* Small screen Menu*/}
         <button
@@ -75,7 +82,13 @@ function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="flex flex-grow justify-center">
-          <img src="/images/logo.png" className={`h-12 md:${isHomePage ? "h-24 mt-2" : "h-20"} me-5`} alt="Mealsy Logo" />
+          <img
+            src="/images/logo.png"
+            className={`h-12 ${
+              isHomePage ? "md:h-24 lg:h-24" : "md:h-20 lg:h-20"
+            } me-5`}
+            alt="Mealsy Logo"
+          />
         </Link>
 
         {/* Search and User profile */}
@@ -86,21 +99,23 @@ function Navbar() {
             className="block w-16 md:w-64 p-2 ps-10 text-sm text-brown-dark border border-beige-medium rounded-lg bg-beige-warm focus:ring-2 focus:ring-brown-light focus:outline-none focus:border-beige-medium dark:bg-beige-light dark:border-brown-medium dark:text-brown-dark dark:focus:ring-brown-light dark:focus:border-beige-medium"
             placeholder="Search..."
           />
-          <button
-            type="button"
-            className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-          >
-            <span className="sr-only">Open user menu</span>
-            <img
-              className="w-10 h-10 md:w-16 md:h-16 rounded-full"
-              src="https://i.pinimg.com/736x/80/61/f2/8061f2ea2fa12cf52ce04fb9e9d34d07.jpg"
-              alt="user photo"
-            />
-          </button>
+          {user && (
+            <button
+              type="button"
+              className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"
+              id="user-menu-button"
+              aria-expanded="false"
+              data-dropdown-toggle="user-dropdown"
+              data-dropdown-placement="bottom"
+            >
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="w-10 h-10 md:w-16 md:h-16 rounded-full"
+                src="https://i.pinimg.com/736x/80/61/f2/8061f2ea2fa12cf52ce04fb9e9d34d07.jpg"
+                alt="user photo"
+              />
+            </button>
+          )}
 
           {/* Dropdown */}
           <div

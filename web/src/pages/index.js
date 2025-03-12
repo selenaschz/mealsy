@@ -1,4 +1,4 @@
-export { default as DishDetailPage} from "./dish-detail"
+export { default as DishPage} from "./dish"
 export { default as DishesPage } from "./dishes"
 export { default as HomePage } from "./home"
 export { default as LoginPage } from "./login"
