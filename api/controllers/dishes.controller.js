@@ -8,6 +8,7 @@ module.exports.create = (req, res, next) => {
     "name",
     "description",
     "duration",
+    "cuisine",
     "instructions",
     "ingredients",
     "calories",
