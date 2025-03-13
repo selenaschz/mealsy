@@ -156,8 +156,16 @@ module.exports.listReviews = (req, res, next) => {
 
   Review.find({ dish: id })
     .populate("user")
-    .populate("dish")
-    .then((reviews) => res.status(200).json(reviews))
+    .then((reviews) => {
+      // Total reviews
+      const total = reviews.length;
+      // Average Rating:
+      const average =
+        total > 0
+          ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
+          : 0;
+      res.status(200).json({ reviews, average, total })
+    })
     .catch(next);
 };
 
