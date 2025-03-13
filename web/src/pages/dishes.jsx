@@ -4,7 +4,7 @@ import { PageLayout } from "../components/layouts";
 function DishesPage() {
   return (
     <PageLayout>
-      <DishList max={10} />
+      <DishList max={20} />
     </PageLayout>
   );
 }

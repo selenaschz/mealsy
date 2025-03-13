@@ -51,6 +51,7 @@ const listDishes = ({ limit, page, cuisine, tags, ingredients, caloriesMin, calo
 };
 
 const getDish = (id) => http.get(`/dishes/${id}`);
+const getReviews = (id) => http.get(`/dishes/${id}/reviews`)
 
 export {
     profile,
@@ -59,4 +60,5 @@ export {
     logout, 
     listDishes, 
     getDish,
+    getReviews
 };
