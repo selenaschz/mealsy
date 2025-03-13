@@ -5,11 +5,12 @@ function StarsReview({ rating }) {
     <>
       {[...Array(totalStars)].map((_, index) => (
         <svg key={index}
-          className={`size-5 shrink-0 ${index < rating ? "text-gray-900" : "text-gray-200"}`}
+          className={`size-5 shrink-0 ${index < rating ? "text-brown-medium" : "text-beige-light"}`}
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
           data-slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
             fillRule="evenodd"
