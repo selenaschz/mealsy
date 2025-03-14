@@ -35,6 +35,7 @@ const listDishes = ({ limit, page, cuisine, tags, ingredients, caloriesMin, calo
 
   const tagList = tags ? tags.join(",") : "";
   const ingredientsList = ingredients ? ingredients.join(",") : "";
+  const durationRange = duration?.length === 2 ? duration.join(",") : duration;
 
   return http.get("/dishes", {
     params: {
@@ -45,13 +46,15 @@ const listDishes = ({ limit, page, cuisine, tags, ingredients, caloriesMin, calo
       ingredients: ingredientsList,
       caloriesMin,
       caloriesMax,
-      duration,
+      duration: durationRange,
     },
   });
-};
+}  
+
 
 const getDish = (id) => http.get(`/dishes/${id}`);
 const getReviews = (id) => http.get(`/dishes/${id}/reviews`)
+
 
 export {
     profile,

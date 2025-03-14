@@ -41,7 +41,7 @@ const filters = [
     options: [
       { value: "vegan", label: "Vegan", checked: false },
       { value: "vegetarian", label: "Vegetarian", checked: false },
-      { value: "gluten-free", label: "Gluten Free", checked: true },
+      { value: "gluten-free", label: "Gluten Free", checked: false },
       { value: "dairy-free", label: "Dairy Free", checked: false },
       { value: "high-protein", label: "High Protein", checked: false },
     ],

@@ -2,23 +2,27 @@ import { useEffect, useState } from "react";
 import * as MealsyAPI from "../../../services/api-service";
 import DishItem from "./../dish-item/dish-item";
 
-function DishList({ max, page, cuisine, tags, ingredients, caloriesMin, caloriesMax, duration}) {
+function DishList({ max, page, filters, sortClicked}) {
   const [dishes, setDishes] = useState([]);
+  const [filteredDishes, setFilteredDishes] = useState([])
 
   useEffect(() => {
+
+    console.log("Filters enviados:", {
+      limit: max || 20,
+      page: page || 1,
+      ...filters
+    });
+
     MealsyAPI.listDishes({
-      limit: max,
-      page,
-      cuisine,
-      tags,
-      ingredients,
-      caloriesMin,
-      caloriesMax,
-      duration,
+      limit: max || 20,
+      page: page || 1,
+      ...filters,
     })
-      .then((dishes) => setDishes(dishes))
-      .catch((error) => console.error(error));
-  }, [ max, page, cuisine, tags, ingredients, caloriesMin, caloriesMax, duration ]);
+      .then((data) => setDishes(data))
+      .catch((error) => console.error("Error fetching dishes:", error));
+  }, [max, page, filters]);
+
 
   return (
     <div className="bg-white">
