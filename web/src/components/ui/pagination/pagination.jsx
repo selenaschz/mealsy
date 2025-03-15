@@ -10,16 +10,16 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded"
+            className={`${currentPage > 1 ? "cursor-pointer hover:text-beige-light hover:bg-brown-light" : ""} px-3 py-1 rounded-full `}
           >
-            Anterior
+            {"<"}
           </button>
   
           {pageNumbers.map((pageNumber) => (
             <button
               key={pageNumber}
               onClick={() => onPageChange(pageNumber)}
-              className={`px-3 py-1 border rounded ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""}`}
+              className={`px-3 py-1 rounded-full hover:bg-brown-dark cursor-pointer hover:text-beige-light ${currentPage === pageNumber ? "bg-brown-dark text-white" : ""}`}
             >
               {pageNumber}
             </button>
@@ -28,9 +28,9 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded"
+            className={`${currentPage === totalPages ? "" : "cursor-pointer hover:text-beige-light hover:bg-brown-light"} px-3 py-1 rounded-full`}
           >
-            Siguiente
+            {">"}
           </button>
         </nav>
       </div>

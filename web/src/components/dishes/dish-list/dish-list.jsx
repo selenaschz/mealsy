@@ -5,7 +5,7 @@ import Pagination from "../../ui/pagination/pagination";
 function DishList({ max, page, filters, sortDishes }) {
   const [dishes, setDishes] = useState([])
   const [filteredDishes, setFilteredDishes] = useState([])
-  const [currentPage, setCurrentPage] = useState(page || 1)
+  const [currentPage, setCurrentPage] = useState(page || 0)
   const [totalPages, setTotalPages] = useState(1)
   const itemsPerPage = 8
 
@@ -97,15 +97,17 @@ function DishList({ max, page, filters, sortDishes }) {
 
   // Get dishes by current page
   const getCurrentPageItems = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage
+    const startIndex = (currentPage) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
     return filteredDishes.slice(startIndex, endIndex)
   }
 
   // Change page
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
+  const handlePageChange = (page) => {
+    if (page >= 0 && page < totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -123,11 +125,11 @@ function DishList({ max, page, filters, sortDishes }) {
 
         {/* Pagination */}
         {filteredDishes.length > itemsPerPage && (
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          <Pagination currentPage={currentPage + 1} totalPages={totalPages} onPageChange={(page) => handlePageChange(page - 1)} />
         )}
         {/* Info Pagination */}
         <p className="pt-6 mb-4 text-sm text-gray-500 text-center">
-          Total dishes: {dishes.length}, Filtered: {filteredDishes.length}, Page: {currentPage}/{totalPages}
+          Total dishes: {dishes.length}, Filtered: {filteredDishes.length}, Page: {currentPage+1}/{totalPages}
         </p>
       </div>
     </div>
