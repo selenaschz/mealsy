@@ -21,13 +21,13 @@ const cuisineCountry = {
   ethiopian: "et",
 };
 
-// Sort options
 const sortOptions = [
-  "Most Popular",
-  "Best Rating",
-  "Newest",
-  "Price: Low to High",
-  "Price: High to Low"
+  { label: "Name (A-Z)", value: "name-asc" },
+  { label: "Name (Z-A)", value: "name-desc" },
+  { label: "Duration (Low to High)", value: "duration-asc" },
+  { label: "Duration (High to Low)", value: "duration-desc" },
+  { label: "Calories (Low to High)", value: "calories-asc" },
+  { label: "Calories (High to Low)", value: "calories-desc" }
 ];
 
 // Categories

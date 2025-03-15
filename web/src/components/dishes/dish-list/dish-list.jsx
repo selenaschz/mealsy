@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as MealsyAPI from "../../../services/api-service";
 import DishItem from "./../dish-item/dish-item";
 
-function DishList({ max, page, filters, sortClicked }) {
+function DishList({ max, page, filters, sortDishes }) {
   const [dishes, setDishes] = useState([])
   const [filteredDishes, setFilteredDishes] = useState([])
 
@@ -41,7 +41,6 @@ function DishList({ max, page, filters, sortClicked }) {
     // Filter by diet
     if (filters.diet && filters.diet.length > 0) {
       result = result.filter((dish) =>
-        // Check if ALL selected diet tags are included in the dish's tags
         filters.diet.every((dietTag) => dish.tags.includes(dietTag)),
       )
     }
@@ -64,8 +63,34 @@ function DishList({ max, page, filters, sortClicked }) {
     }
   }
 
+    // Sort dishes
+    if (sortDishes) {
+      switch (sortDishes) {
+        case "name-asc":
+          result.sort((a, b) => a.name.localeCompare(b.name))
+          break
+        case "name-desc":
+          result.sort((a, b) => b.name.localeCompare(a.name))
+          break
+        case "duration-asc":
+          result.sort((a, b) => a.duration - b.duration)
+          break
+        case "duration-desc":
+          result.sort((a, b) => b.duration - a.duration)
+          break
+        case "calories-asc":
+          result.sort((a, b) => a.calories - b.calories)
+          break
+        case "calories-desc":
+          result.sort((a, b) => b.calories - a.calories)
+          break
+        default:
+          break
+      }
+    }
+
   setFilteredDishes(result)
-}, [ filters ])
+}, [ filters, sortDishes ])
 
 
 

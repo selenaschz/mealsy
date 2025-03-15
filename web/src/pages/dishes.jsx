@@ -5,7 +5,7 @@ import Filters from "../components/filters/filters";
 import SortFilter from "../components/filters/sort-filter/sort-filter";
 
 function DishesPage() {
-  const [sortClicked, setSortClicked] = useState("Most popular");
+  const [sortClicked, setSortClicked] = useState("name-asc");
   const [filters, setFilters] = useState({
     category: "",
     duration: [0, 600],
@@ -26,7 +26,7 @@ function DishesPage() {
         <Filters onFiltersChange={handleFiltersChange} />
         <SortFilter setSortClicked={setSortClicked} sortClicked={sortClicked} />
       </div>
-      <DishList max={20} page={0} filters={filters} sort={sortClicked} />
+      <DishList max={20} page={0} filters={filters} sortDishes={sortClicked} />
     </PageLayout>
   );
 }
