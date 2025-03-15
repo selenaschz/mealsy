@@ -8,6 +8,7 @@ import {
   DishPage,
   MealPlannerPage,
   AboutPage,
+  ProfilePage,
 } from "./pages";
 
 import PrivateRoute from "./guards/private-route";
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dishes/:id" element={<DishPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/dishes"
           element={

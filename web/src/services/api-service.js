@@ -20,6 +20,8 @@ http.interceptors.response.use(
 
 // Profile
 const profile = (username) => http.get(`/users/${username}`);
+const updateUser = (user) => http.patch("/users/profile", user);
+
 
 // Register
 const register = (user) => http.post("/users", user);
@@ -48,5 +50,6 @@ export {
     logout, 
     listDishes, 
     getDish,
-    getReviews
+    getReviews,
+    updateUser
 };

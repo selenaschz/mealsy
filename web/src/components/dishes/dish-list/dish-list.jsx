@@ -9,7 +9,6 @@ function DishList({ max, page, filters, sortDishes }) {
   const [totalPages, setTotalPages] = useState(1)
   const itemsPerPage = 8
 
-  // Cargar platos desde la API
   useEffect(() => {
     console.log("Fetching dishes with max:", max, "page:", page)
     MealsyAPI.listDishes({
@@ -24,7 +23,6 @@ function DishList({ max, page, filters, sortDishes }) {
       .catch((error) => console.error("Error loading dishes:", error))
   }, [max, page])
 
-  // Aplicar filtros
   useEffect(() => {
     if (!dishes.length) {
       console.log("No dishes to filter")
@@ -124,13 +122,7 @@ function DishList({ max, page, filters, sortDishes }) {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="sr-only">Products</h2>
-
-        {/* Info Pagination */}
-        <div className="mb-4 text-sm text-gray-500">
-          Total dishes: {dishes.length}, Filtered: {filteredDishes.length}, Page: {currentPage}/{totalPages}
-        </div>
-
+        <h2 className="sr-only">Dishes</h2>
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {getCurrentPageItems().length > 0 ? (
             getCurrentPageItems().map((dish) => <DishItem key={dish.id} dish={dish} />)
@@ -145,6 +137,10 @@ function DishList({ max, page, filters, sortDishes }) {
         {filteredDishes.length > itemsPerPage && (
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         )}
+        {/* Info Pagination */}
+        <p className="pt-6 mb-4 text-sm text-gray-500 text-center">
+          Total dishes: {dishes.length}, Filtered: {filteredDishes.length}, Page: {currentPage}/{totalPages}
+        </p>
       </div>
     </div>
   )

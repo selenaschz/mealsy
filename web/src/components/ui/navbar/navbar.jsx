@@ -100,13 +100,8 @@ function Navbar() {
             placeholder="Search..."
           />
           {user && (
-            <button
-              type="button"
+            <Link to="/profile"
               className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
             >
               <span className="sr-only">Open user menu</span>
               <img
@@ -114,7 +109,7 @@ function Navbar() {
                 src="https://i.pinimg.com/736x/80/61/f2/8061f2ea2fa12cf52ce04fb9e9d34d07.jpg"
                 alt="user photo"
               />
-            </button>
+            </Link>
           )}
 
           {/* Dropdown */}
