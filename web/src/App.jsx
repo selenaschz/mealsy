@@ -15,8 +15,9 @@ import PrivateRoute from "./guards/private-route";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
+      <main className="flex-grow">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -46,8 +47,9 @@ function App() {
           }
         />
       </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
