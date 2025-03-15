@@ -88,8 +88,6 @@ function Filters({ onFiltersChange }) {
         };
       }
     });
-
-    console.log(selectedFilters);
   };
 
   // Cuisine and Duration (Range filters )
@@ -98,18 +96,14 @@ function Filters({ onFiltersChange }) {
       ...prevFilters,
       [sectionKey]: newValues,
     }));
-
-    console.log(selectedFilters);
   };
 
   // Breakfast, lunch or dinner
   const handleCategoryChange = (category) => {
     const newCategory = category === selectedCategory ? "" : category;
-    console.log("Category changed:", newCategory);
 
     // Update selectedCategory:
     setSelectedCategory(newCategory);
-
     // Update selectedFilters:
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,

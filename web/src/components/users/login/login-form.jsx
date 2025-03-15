@@ -12,7 +12,6 @@ function LoginForm() {
 
   const handleLogin = async (user) => {
     try {
-      console.log(user)
       user = await MealsyAPI.login(user);
       login(user);
       navigate("/");

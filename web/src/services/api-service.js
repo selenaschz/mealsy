@@ -29,26 +29,11 @@ const login = (user) => http.post("/sessions", user);
 const logout = () => http.delete("/sessions");
 
 // Dishes 
-const listDishes = ({ limit, page, cuisine, tags, ingredients, caloriesMin, caloriesMax, duration }) => {
+const listDishes = ({ limit, page }) => {
   limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 20 : limit;
   page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
 
-  const tagList = tags ? tags.join(",") : "";
-  const ingredientsList = ingredients ? ingredients.join(",") : "";
-  const durationRange = duration?.length === 2 ? duration.join(",") : duration;
-
-  return http.get("/dishes", {
-    params: {
-      limit,
-      page,
-      cuisine,
-      tags: tagList,
-      ingredients: ingredientsList,
-      caloriesMin,
-      caloriesMax,
-      duration: durationRange,
-    },
-  });
+  return http.get("/dishes", { params: { limit, page } });
 }  
 
 

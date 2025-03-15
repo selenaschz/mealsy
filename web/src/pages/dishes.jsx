@@ -17,7 +17,6 @@ function DishesPage() {
 
   // Update filters (from Filters component)
   const handleFiltersChange = (filters) => {
-    console.log("Filters updated:", filters)
     setFilters(filters)
   }
 
@@ -27,7 +26,7 @@ function DishesPage() {
         <Filters onFiltersChange={handleFiltersChange} />
         <SortFilter setSortClicked={setSortClicked} sortClicked={sortClicked} />
       </div>
-      <DishList max={20} page={1} filters={filters} sort={sortClicked} />
+      <DishList max={20} page={0} filters={filters} sort={sortClicked} />
     </PageLayout>
   );
 }

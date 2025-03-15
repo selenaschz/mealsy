@@ -86,7 +86,7 @@ function Navbar() {
             src="/images/logo.png"
             className={`h-12 ${
               isHomePage ? "md:h-24 lg:h-24" : "md:h-20 lg:h-20"
-            } me-5`}
+            } me-10`}
             alt="Mealsy Logo"
           />
         </Link>
