@@ -54,7 +54,7 @@ function SearchBar({}) {
       <input
         type="text"
         id="search-navbar"
-        className="block w-16 md:w-64 p-4 ps-10 text-sm text-brown-dark border border-beige-medium rounded-full bg-beige-warm focus:ring-2 focus:ring-brown-light focus:outline-none focus:border-beige-medium dark:bg-beige-light dark:border-brown-medium dark:text-brown-dark dark:focus:ring-brown-light dark:focus:border-beige-medium"
+        className={`${isOpen ? "pb-10 focus:ring-0" : "focus:border-beige-medium focus:ring-2"} block w-16 md:w-64 p-4 ps-10 text-sm text-brown-dark border border-beige-medium rounded-full bg-beige-warm focus:ring-brown-light focus:outline-none  dark:bg-beige-light dark:border-brown-medium dark:text-brown-dark dark:focus:ring-brown-light dark:focus:border-beige-medium`}
         placeholder="Search for dishes..."
         onChange={(e) => {
           setName(e.target.value);
@@ -64,7 +64,7 @@ function SearchBar({}) {
       {loading && <p className="text-beige-light">Searching...</p>}
       {/* Dropwdown with results */}
       {isOpen && filteredDishes.length > 0 && (
-        <ul className="absolute w-full mt-1 bg-beige-light border border-brown-light rounded-xl max-h-32 overflow-y-auto z-10 shadow-lg">
+        <ul className="absolute w-full -mt-9 bg-beige-light border-b border-brown-light max-h-32 overflow-y-auto z-10 shadow-lg">
           {filteredDishes.map((dish, index) => (
             <Link
               to={`/dishes/${dish.id}`}
