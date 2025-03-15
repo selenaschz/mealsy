@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/auth-context";
+import SearchBar from "../searchbar/searchbar";
 
 function Navbar() {
   const location = useLocation();
@@ -93,12 +94,7 @@ function Navbar() {
 
         {/* Search and User profile */}
         <div className="flex flex-grow justify-end items-center space-x-4">
-          <input
-            type="text"
-            id="search-navbar"
-            className="block w-16 md:w-64 p-2 ps-10 text-sm text-brown-dark border border-beige-medium rounded-lg bg-beige-warm focus:ring-2 focus:ring-brown-light focus:outline-none focus:border-beige-medium dark:bg-beige-light dark:border-brown-medium dark:text-brown-dark dark:focus:ring-brown-light dark:focus:border-beige-medium"
-            placeholder="Search..."
-          />
+          <SearchBar />
           {user && (
             <Link to="/profile"
               className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"
@@ -106,7 +102,7 @@ function Navbar() {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-10 h-10 md:w-16 md:h-16 rounded-full"
-                src="https://i.pinimg.com/736x/80/61/f2/8061f2ea2fa12cf52ce04fb9e9d34d07.jpg"
+                src={user?.avatar}
                 alt="user photo"
               />
             </Link>

@@ -28,11 +28,11 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-sm mx-auto">
-      <h2 className="pb-3 text-center font-heading text-8xl text-brown-dark">
-        Login
+    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-2xl mx-auto flex flex-col justify-center items-center">
+      <h2 className="pb-3 text-center font-heading text-7xl text-brown-dark font-bold">
+        Log in
       </h2>
-      <form onSubmit={handleSubmit(handleLogin)} data-testid="login-form">
+      <form onSubmit={handleSubmit(handleLogin)} data-testid="login-form" className="w-full">
         <InputField
           id="email"
           label="Email"
@@ -50,7 +50,7 @@ function LoginForm() {
           register={register}
           errors={errors.password}
         />
-        <div className="d-grid mb-6">
+        <div className="d-grid mb-6 text-center">
           <FormButton text="Login"/>
         </div>
       </form>

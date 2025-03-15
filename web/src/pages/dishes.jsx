@@ -26,7 +26,7 @@ function DishesPage() {
         <Filters onFiltersChange={handleFiltersChange} />
         <SortFilter setSortClicked={setSortClicked} sortClicked={sortClicked} />
       </div>
-      <DishList max={30} page={1} filters={filters} sortDishes={sortClicked} />
+      <DishList max={30} page={0} filters={filters} sortDishes={sortClicked} />
     </PageLayout>
   );
 }

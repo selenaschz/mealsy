@@ -10,7 +10,6 @@ function DishList({ max, page, filters, sortDishes }) {
   const itemsPerPage = 8
 
   useEffect(() => {
-    console.log("Fetching dishes with max:", max, "page:", page)
     MealsyAPI.listDishes({
       limit: max,
       page: page,
@@ -25,17 +24,13 @@ function DishList({ max, page, filters, sortDishes }) {
 
   useEffect(() => {
     if (!dishes.length) {
-      console.log("No dishes to filter")
       return
     }
-
-    console.log("Applying filters:", filters)
     let result = [...dishes]
 
     if (filters) {
       // Filter by category (dinner, lunch, etc.)
       if (filters.category) {
-        console.log("Filtering by category:", filters.category)
         result = result.filter(
           (dish) => dish.tags && dish.tags.some((tag) => tag.toLowerCase() === filters.category.toLowerCase()),
         )
@@ -43,40 +38,34 @@ function DishList({ max, page, filters, sortDishes }) {
 
       // Filter by cuisine
       if (filters.cuisine && filters.cuisine.length > 0) {
-        console.log("Filtering by cuisine:", filters.cuisine)
         result = result.filter((dish) => filters.cuisine.includes(dish.cuisine))
       }
 
       // Filter by diet
       if (filters.diet && filters.diet.length > 0) {
-        console.log("Filtering by diet:", filters.diet)
         result = result.filter((dish) => filters.diet.every((dietTag) => dish.tags.includes(dietTag)))
       }
 
       // Filter by calories
       if (filters.calories && filters.calories.length === 2) {
         const [min, max] = filters.calories
-        console.log("Filtering by calories:", min, "to", max)
         result = result.filter((dish) => dish.calories >= min && dish.calories <= max)
       }
 
       // Filter by duration
       if (filters.duration && filters.duration.length === 2) {
         const [min, max] = filters.duration
-        console.log("Filtering by duration:", min, "to", max)
         result = result.filter((dish) => dish.duration >= min && dish.duration <= max)
       }
 
       // Filter by preparation
       if (filters.preparation && filters.preparation.length > 0) {
-        console.log("Filtering by preparation:", filters.preparation)
         result = result.filter((dish) => dish.preparation && filters.preparation.includes(dish.preparation))
       }
     }
 
     // Apply sorting
     if (sortDishes) {
-      console.log("Sorting dishes by:", sortDishes)
       switch (sortDishes) {
         case "name-asc":
           result.sort((a, b) => a.name.localeCompare(b.name))
@@ -103,7 +92,7 @@ function DishList({ max, page, filters, sortDishes }) {
 
     setFilteredDishes(result)
     setTotalPages(Math.ceil(result.length / itemsPerPage))
-    setCurrentPage(1) // Reset to first page when filters change
+    setCurrentPage(0) // Reset to first page when filters change
   }, [dishes, filters, sortDishes])
 
   // Get dishes by current page
@@ -115,7 +104,6 @@ function DishList({ max, page, filters, sortDishes }) {
 
   // Change page
   const handlePageChange = (pageNumber) => {
-    console.log("Changing to page:", pageNumber)
     setCurrentPage(pageNumber)
   }
 
@@ -133,7 +121,7 @@ function DishList({ max, page, filters, sortDishes }) {
           )}
         </div>
 
-        {/* Paginación */}
+        {/* Pagination */}
         {filteredDishes.length > itemsPerPage && (
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         )}

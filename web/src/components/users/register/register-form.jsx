@@ -39,10 +39,11 @@ function RegisterForm() {
   };
 
   return (
-    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-md mx-auto">
-      <h2 className="pb-5 text-center font-heading text-8xl text-brown-dark">
-        Register
+    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-2xl mx-auto">
+      <h2 className="pb-3 text-center font-heading text-7xl text-brown-dark font-bold">
+        Enjoy a personalized experience
       </h2>
+      <p className="text-brown-medium mb-10"> Sign up to customize your meal recommendations, plan your weekly menu, and access all our features! </p>
       <form onSubmit={handleSubmit(handleRegister)} data-testid="register-form">
         <InputField
           id="firstName"
