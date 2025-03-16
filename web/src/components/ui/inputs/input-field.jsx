@@ -13,8 +13,8 @@ function InputField({ id, label, type = 'text', placeholder, register, errors })
         } text-brown-dark placeholder-brown-dark text-sm rounded-lg focus:ring-brown-light focus:border-beige-medium focus:outline-none block w-full p-2.5 dark:border-brown-medium dark:placeholder-brown-medium dark:text-brown-dark`}
         {...register(id, { required: "Mandatory field" })}
       />
-      {errors?.[id] && (
-        <span className="text-xs text-[#9b392c]">{ errors[id].message }</span>
+      {errors && (
+        <span className="text-xs text-[#9b392c]">{ errors.message }</span>
       )}
     </div>
   );

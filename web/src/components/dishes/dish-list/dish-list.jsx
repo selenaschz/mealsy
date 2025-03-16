@@ -7,7 +7,7 @@ function DishList({ max, page, filters, sortDishes }) {
   const [filteredDishes, setFilteredDishes] = useState([])
   const [currentPage, setCurrentPage] = useState(page || 0)
   const [totalPages, setTotalPages] = useState(1)
-  const itemsPerPage = 8
+  const itemsPerPage = 12
 
   useEffect(() => {
     MealsyAPI.listDishes({
@@ -111,7 +111,7 @@ function DishList({ max, page, filters, sortDishes }) {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div className="mx-auto  px-4 sm:px-6 py-5  ">
         <h2 className="sr-only">Dishes</h2>
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {getCurrentPageItems().length > 0 ? (
