@@ -30,13 +30,18 @@ function App() {
               <DishesPage />
           }
         />
-        <Route
+        {/* <Route
           path="/planner"
           element={
             <PrivateRoute>
               <MealPlannerPage />
             </PrivateRoute>
           }
+        /> */}
+        <Route
+          path="/planner"
+          element={
+              <MealPlannerPage />}
         />
         <Route
           path="/about"
