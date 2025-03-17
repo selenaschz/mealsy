@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bottom-0 mt-10 bg-beige-light">
+    <footer className="bottom-0 bg-beige-light">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -21,17 +21,17 @@ function Footer() {
               </h2>
               <ul className="text-brown-light font-medium">
                 <li className="mb-4">
-                  <a href="https://flowbite.com/" className="hover:underline">
+                  <a href="#" className="hover:underline">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a
+                  <Link to="/about"
                     href="https://tailwindcss.com/"
                     className="hover:underline"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

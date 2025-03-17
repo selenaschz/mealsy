@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as MealsyAPI from "../../../services/api-service";
 
 function ReviewForm({ id }) {
   const [commentText, setCommentText] = useState("");
   const [rating, setRating] = useState(0);
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
   // Función para manejar el envío de comentarios
   const handleSubmitReview = async (event) => {
@@ -14,10 +15,21 @@ function ReviewForm({ id }) {
       await MealsyAPI.createReview(id, reviewData);
       setCommentText("");
       setRating(0);
+      setConfirmationMessage("Review submitted successfully!");
     } catch (error) {
       console.error("Error submitting review:", error);
+      setConfirmationMessage("Error. You have already written a review for this dish.")
     }
   };
+
+  useEffect(() => {
+    if (confirmationMessage) {
+      const timer = setTimeout(() => {
+        setConfirmationMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [confirmationMessage]);
 
   return (
     <div>
@@ -62,6 +74,11 @@ function ReviewForm({ id }) {
             </button>
           </div>
         </form>
+        {confirmationMessage && (
+          <div className={`${confirmationMessage?.includes("Error") ? "bg-red-800" : "bg-green-700"} mt-2 p-2 text-white rounded-lg text-center`}>
+            {confirmationMessage}
+          </div>
+        )}
       </div>
     </div>
   );

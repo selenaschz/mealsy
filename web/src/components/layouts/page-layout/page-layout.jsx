@@ -1,6 +1,6 @@
-function PageLayout({ children }) {
+function PageLayout({ children, className="" }) {
   return (
-    <div className="px-16 py-10">{ children }</div>
+    <div className={`${className} px-16 pt-10`}>{ children }</div>
   )
 }
 

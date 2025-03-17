@@ -12,28 +12,34 @@ function DishDetail() {
   const [dataReviews, setDataReviews] = useState([]);
   const { id } = useParams();
   const [showReviews, setShowReviews] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getDish();
     getReviews();
-    console.log(dataReviews);
   }, [id]);
 
   const getDish = async () => {
     try {
+      setIsLoading(true);
       const dishData = await MealsyAPI.getDish(id);
       setDish(dishData);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getReviews = async () => {
     try {
+      setIsLoading(true);
       const reviewsData = await MealsyAPI.getReviews(id);
       setDataReviews(reviewsData);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,10 +60,16 @@ function DishDetail() {
 
   return (
     <div className="bg-white">
-      {dataReviews?.reviews && showReviews ? (
-        <ReviewsModal data={dataReviews.reviews} setShowModal={setShowReviews} />
-      ) : (
-        <p>Loading reviews...</p>
+    {isLoading && (
+        <div className="flex w-screen h-screen inset-0 justify-center items-center bg-beige-light fixed z-10">
+          <img src="/images/load.gif" className="w-40" alt="Loading..." />
+        </div>
+      )}
+      {dataReviews?.reviews && showReviews && (
+        <ReviewsModal
+          data={dataReviews.reviews}
+          setShowModal={setShowReviews}
+        />
       )}
       <div className="pt-6">
         <nav aria-label="Breadcrumb">

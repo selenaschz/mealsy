@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow h-full">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -46,9 +46,7 @@ function App() {
         <Route
           path="/about"
           element={
-            <PrivateRoute>
               <AboutPage />
-            </PrivateRoute>
           }
         />
       </Routes>
