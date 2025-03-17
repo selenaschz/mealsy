@@ -25,6 +25,7 @@ function DishesPage() {
     <div>
     <Carousel />
     <PageLayout>
+      <h1 className="mt-2 w-full font-heading text-8xl text-center text-brown-dark ">Explore, Filter, Savor</h1>
       <div className="bg-white flex justify-end px-4 gap-6">
         <Filters onFiltersChange={handleFiltersChange} />
         <SortFilter setSortClicked={setSortClicked} sortClicked={sortClicked} />

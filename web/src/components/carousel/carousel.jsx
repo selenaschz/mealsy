@@ -38,7 +38,7 @@ function Carousel() {
                 className={`duration-700 ease-in-out ${
                   index === currentIndex ? 'block' : 'hidden'
                 }`}
-                data-Carousel-item
+                data-carousel-item
               >
               <Link to="/planner">
                 <img

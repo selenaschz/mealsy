@@ -4,20 +4,41 @@ import { useEffect } from "react";
 import StarsReview from "../../stars-review/stars-review";
 import { Link, useParams } from "react-router-dom";
 import { cuisineCountry as country } from "/src/utils/constants.js";
+import ReviewsModal from "../../reviews-modal/reviews-modal";
 
 function DishDetail() {
   const [dish, setDish] = useState();
   const [dataReviews, setDataReviews] = useState([]);
   const { id } = useParams();
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
-    MealsyAPI.getDish(id)
-      .then((dish) => setDish(dish))
-      .catch((error) => console.error(error));
-    MealsyAPI.getReviews(id)
-      .then((reviews) => setDataReviews(reviews))
-      .catch((error) => console.error(error));
+    getDish();
+    getReviews();
+    console.log(dataReviews);
   }, [id]);
+
+  const getDish = async () => {
+    try {
+      const dishData = await MealsyAPI.getDish(id);
+      setDish(dishData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getReviews = async () => {
+    try {
+      const reviewsData = await MealsyAPI.getReviews(id);
+      setDataReviews(reviewsData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleShowReviews = () => {
+    setShowReviews(true);
+  };
 
   const getDietTags = (tags) => {
     return tags?.filter(
@@ -32,6 +53,11 @@ function DishDetail() {
 
   return (
     <div className="bg-white">
+      {dataReviews?.reviews && showReviews ? (
+        <ReviewsModal data={dataReviews.reviews} setShowModal={setShowReviews} />
+      ) : (
+        <p>Loading reviews...</p>
+      )}
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol
@@ -70,15 +96,19 @@ function DishDetail() {
           </ol>
         </nav>
 
-        <div className="mx-auto mt-6 sm:px-6 lg:px-8 max-w-2xl lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-14 flex justify-center items-center">
-          <img
-            src={dish?.image}
-            alt={dish?.name}
-            className="aspect-3/2 w-full rounded-lg object-cover"
-          ></img>
-          <h1 className="font-heading text-9xl text-brown-dark">
-            {dish?.name}
-          </h1>
+        <div className="mx-auto mt-6 px-4 lg:px-8 max-w-2xl lg:max-w-7xl lg:grid lg:grid-cols-2">
+          <div className="w-full">
+            <img
+              src={dish?.image}
+              alt={dish?.name}
+              className="aspect-square w-full object-cover brightness-90 contrast-90"
+            />
+          </div>
+          <div className="bg-beige-light flex w-full h-full lg:px-14 items-center justify-center p-4">
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-9xl text-brown-dark">
+              {dish?.name}
+            </h1>
+          </div>
         </div>
 
         <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
@@ -95,13 +125,13 @@ function DishDetail() {
                   {dataReviews?.average && Math.round(dataReviews.average)} out
                   of 5 stars
                 </p>
-                <a
-                  href="#"
+                <button
+                  onClick={handleShowReviews}
                   className="ml-3 text-sm font-medium text-brown-dark hover:text-brown-medium"
                 >
                   {" "}
                   {dataReviews?.total} reviews
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -122,7 +152,7 @@ function DishDetail() {
                   <img
                     key={index}
                     src={`/images/${tag}.png`}
-                    className={(tag === "vegetarian") ? "w-9" : "w-8"}
+                    className={tag === "vegetarian" ? "w-9" : "w-8"}
                     title={tag}
                   />
                 ))}
@@ -161,7 +191,12 @@ function DishDetail() {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <img src="/images/calories.png" alt="Calories" className="w-5" title="calories"/>
+                  <img
+                    src="/images/calories.png"
+                    alt="Calories"
+                    className="w-5"
+                    title="calories"
+                  />
                   <p>{dish?.calories}</p>
                 </div>
                 <div className="flex gap-2 w-10 h-6">

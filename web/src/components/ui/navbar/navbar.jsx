@@ -64,14 +64,6 @@ function Navbar() {
             </li>
             <li>
               <Link
-                to="/planner"
-                className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
-              >
-                Surprise Meal
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/about"
                 className="block py-2 px-3 text-beige-light rounded-sm md:bg-transparent md:hover:text-beige-medium md:p-0 transition-colors duration-300"
               >
