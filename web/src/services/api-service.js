@@ -40,7 +40,10 @@ const listDishes = ({ limit, page }) => {
 
 
 const getDish = (id) => http.get(`/dishes/${id}`);
+
+//Reviews
 const getReviews = (id) => http.get(`/dishes/${id}/reviews`);
+const createReview = (id, review) => http.post(`/dishes/${id}/reviews`, review)
 
 // Week plan
 const getRandomWeekPlan = () => http.get('/plans/random');
@@ -55,5 +58,6 @@ export {
     getDish,
     getReviews,
     updateUser,
-    getRandomWeekPlan
+    getRandomWeekPlan,
+    createReview
 };

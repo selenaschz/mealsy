@@ -5,6 +5,7 @@ import StarsReview from "../../stars-review/stars-review";
 import { Link, useParams } from "react-router-dom";
 import { cuisineCountry as country } from "/src/utils/constants.js";
 import ReviewsModal from "../../reviews-modal/reviews-modal";
+import ReviewForm from "../../users/review/review-form";
 
 function DishDetail() {
   const [dish, setDish] = useState();
@@ -127,13 +128,14 @@ function DishDetail() {
                 </p>
                 <button
                   onClick={handleShowReviews}
-                  className="ml-3 text-sm font-medium text-brown-dark hover:text-brown-medium"
+                  className="ml-3 text-sm font-medium text-brown-dark hover:text-brown-medium cursor-pointer hover:underline"
                 >
                   {" "}
                   {dataReviews?.total} reviews
                 </button>
               </div>
             </div>
+            <ReviewForm id={dish?.id} />
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">
