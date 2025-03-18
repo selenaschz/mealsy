@@ -3,30 +3,67 @@ import * as MealsyAPI from "../services/api-service"
 import WeekPlan from '../components/week-plan/week-grid';
 import WeekGrid from "../components/week-plan/week-grid";
 import PageLayout from './../components/layouts/page-layout/page-layout';
+import html2pdf from "html2pdf.js";
 
 function MealPlannerPage() {
   const [weekPlan, setWeekPlan] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [update, setUpdate] = useState(0)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   MealsyAPI.getRandomWeekPlan()
+  //     .then((plan) => {
+  //       setWeekPlan(plan.week);
+  //       console.log(plan.week)
+  //       localStorage.setItem("weekPlan", JSON.stringify(plan.week));
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching week plan:', error);
+  //     })
+  //     .finally (() => {
+  //       setIsLoading(false);
+  //     });
+  // }, [update]);
+
+  const handleUpdate = () => {
+    fetchPlan();
+  }
+
+  const handleDownloadPDF = () => {
+    const element = document.getElementById("meal-planner");
+    const opt = {
+      margin: 1,
+      filename: "meal-planner.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    html2pdf().set(opt).from(element).save();
+  };
+
+  const fetchPlan = () => {
     setIsLoading(true);
     MealsyAPI.getRandomWeekPlan()
       .then((plan) => {
         setWeekPlan(plan.week);
-        console.log(plan.week)
+        localStorage.setItem("weekPlan", JSON.stringify(plan.week));
       })
       .catch((error) => {
-        console.error('Error fetching week plan:', error);
+        console.error("Error fetching week plan:", error);
       })
-      .finally (() => {
+      .finally(() => {
         setIsLoading(false);
       });
-  }, [update]);
+  };
 
-  const handleUpdate = () => {
-    setUpdate(prev => prev + 1);
-  }
+  useEffect(() => {
+    const storedPlan = localStorage.getItem("weekPlan");
+    if (storedPlan) {
+      setWeekPlan(JSON.parse(storedPlan));
+    } else {
+      fetchPlan();
+    }
+  }, []);
 
   return (
     <PageLayout className="bg-beige-light">
@@ -35,7 +72,7 @@ function MealPlannerPage() {
           <img src="/images/load.gif" className="w-40" alt="Loading..." />
         </div>
       )}
-    <div className="max-w-5xl mx-auto p-4 bg-beige-light pb-40">
+    <div id="meal-planner" className="max-w-5xl mx-auto p-4 bg-beige-light pb-10">
       <header className="bg-beige-light p-6 text-center flex flex-col justify-center items-center">
         <h1 className="font-heading text-7xl text-brown-dark font-bold">Your Weekly Meal Plan</h1>
         <img src="/images/cook.gif" alt="cook" className="w-40"/>
@@ -47,6 +84,14 @@ function MealPlannerPage() {
       </header>
       <WeekGrid weekPlan={weekPlan} />
     </div>
+    <div className="flex justify-center mt-4 pb-40">
+        <button
+          className="px-4 py-2 bg-brown-dark text-white rounded-lg hover:bg-brown-light transition-colors"
+          onClick={handleDownloadPDF}
+        >
+          Download PDF
+        </button>
+      </div>
     </PageLayout>
   );
 }

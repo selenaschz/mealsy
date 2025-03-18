@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { cuisineCountry as country } from "/src/utils/constants.js";
 import ReviewsModal from "../../reviews-modal/reviews-modal";
 import ReviewForm from "../../users/review/review-form";
+import { useAuthContext } from "../../../contexts/auth-context";
 
 function DishDetail() {
   const [dish, setDish] = useState();
@@ -13,11 +14,14 @@ function DishDetail() {
   const { id } = useParams();
   const [showReviews, setShowReviews] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     getDish();
     getReviews();
   }, [id]);
+
+  
 
   const getDish = async () => {
     try {
@@ -147,7 +151,9 @@ function DishDetail() {
                 </button>
               </div>
             </div>
-            <ReviewForm id={dish?.id} />
+            {user && (
+              <ReviewForm id={dish?.id} />
+            )}
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">
@@ -239,6 +245,21 @@ function DishDetail() {
                     </li>
                   ))}
                 </ol>
+              </div>
+            </div>
+            <div className="mt-10">
+              <h3 className="text-sm font-medium text-gray-900">
+                Ingredients
+              </h3>
+
+              <div className="mt-4">
+                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
+                  {dish?.ingredients?.map((ingredient, index) => (
+                    <li key={index} className="text-brown-dark">
+                      <span className="text-gray-600">{ingredient.ingredient}: {ingredient.quantity} {ingredient.unit}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

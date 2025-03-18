@@ -4,7 +4,7 @@ import { useAuthContext } from "../contexts/auth-context";
 import { useEffect, useState } from "react";
 
 function ProfilePage() {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
   const [avatar, setAvatar] = useState(null);
   const [updateMessage, setUpdateMessage] = useState(null);
 
@@ -48,10 +48,11 @@ function ProfilePage() {
   };
 
   return (
-    <div className="bg-beige-light p-8 rounded-lg shadow-lg max-w-2xl mx-auto mt-10">
+    <div className="bg-beige-light p-8 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
       <h2 className="text-center font-heading text-8xl text-brown-dark mb-8">
         Profile
       </h2>
+      
       <form
         onSubmit={handleSubmit(handleUpdateProfile)}
         className="space-y-6 pt-6 flex flex-col justify-center items-center"
@@ -154,6 +155,14 @@ function ProfilePage() {
           <p className="text-red-500 mt-4 font-bold">{errors.api.message}</p>
         )}
       </form>
+      <div className="flex justify-center pt-8 mb-4">
+        <button 
+          onClick={logout}
+          className="px-4 py-2 bg-beige-medium text-white rounded-lg hover:bg-brown-medium transition-colors cursor-pointer"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

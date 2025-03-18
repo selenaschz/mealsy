@@ -39,7 +39,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="bg-beige-light p-6 pt-3 rounded-lg shadow-lg max-w-2xl mx-auto mb-10">
       <h2 className="pb-3 text-center font-heading text-7xl text-brown-dark font-bold">
         Enjoy a personalized experience
       </h2>

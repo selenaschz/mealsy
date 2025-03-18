@@ -78,15 +78,18 @@ function Navbar() {
           <img
             src="/images/logo.png"
             className={`h-12 ${
-              isHomePage ? "md:h-24 lg:h-24" : "md:h-20 lg:h-20"
+              isHomePage ? "md:h-24 lg:h-24 me-40" : "md:h-20 lg:h-20"
             } me-10`}
             alt="Mealsy Logo"
           />
         </Link>
 
         {/* Search and User profile */}
+        
         <div className="flex flex-grow justify-end items-center space-x-4">
-          <SearchBar />
+          {!isHomePage && (
+            <SearchBar />
+          )}
           {user && (
             <Link to="/profile"
               className="flex text-sm bg-brown-medium rounded-full md:me-0 focus:ring-4 focus:ring-brown-light"

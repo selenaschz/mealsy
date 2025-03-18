@@ -23,26 +23,26 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dishes/:id" element={<DishPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route 
+        path="/profile" 
+        element={
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>} />
         <Route
           path="/dishes"
           element={
               <DishesPage />
           }
         />
-        {/* <Route
+        <Route
           path="/planner"
           element={
             <PrivateRoute>
               <MealPlannerPage />
             </PrivateRoute>
           }
-        /> */}
-        <Route
-          path="/planner"
-          element={
-              <MealPlannerPage />}
-        />
+        /> 
         <Route
           path="/about"
           element={
