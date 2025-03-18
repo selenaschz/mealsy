@@ -20,7 +20,7 @@ router.patch("/dishes/:id", auth.isAuthenticated, auth.isAdmin, dishes.update);
 
 // Users
 router.post("/users", storage.single("avatar"), users.create);
-router.patch("/users/:username", auth.isAuthenticated, users.update);
+router.patch("/users/:username", auth.isAuthenticated, storage.single("avatar"), users.update);
 router.get("/users/:username", auth.isAuthenticated, users.profile);
 
 // Sessions

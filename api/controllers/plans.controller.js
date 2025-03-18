@@ -61,11 +61,15 @@ module.exports.random = (req, res, next) => {
   Plan.aggregate([{ $match: { predefined: true } }, { $sample: { size: 1 } }])
     .then((plan) => {
       if (plan.length === 0) {
-        next(createError(404, "No predefined plans found"));
-      } else {
-        res.json(plan[0]);
+        return next(createError(404, "No predefined plans found"));
       }
+
+      return Plan.populate(plan[0], {
+        path: 'week.breakfast week.lunch week.dinner',
+      });
     })
-    .catch((error) => {n
-        next(error)});
+    .then((populatedPlan) => {
+      res.json(populatedPlan);
+    })
+    .catch((error) => next(error));
 };

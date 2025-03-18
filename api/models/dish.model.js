@@ -28,7 +28,7 @@ const dishSchema = new mongoose.Schema(
         unit: {
           type: String,
           required: [true, "Unit is required"],
-          enum: ["g", "kg", "ml", "l", "cups", "tbsp", "tsp", "units", "cloves"],
+          enum: ["g", "kg", "ml", "l", "cups", "tbsp", "tsp", "units", "cloves", "stalks","slices", "whole"],
           message: "Unit must be one of the predefined units",
         },
       },
@@ -68,6 +68,7 @@ const dishSchema = new mongoose.Schema(
         "german",
         "brazilian",
         "ethiopian",
+        "hawaiian"
       ],
     },
     instructions: {
@@ -91,6 +92,10 @@ const dishSchema = new mongoose.Schema(
         "dinner",
         "sweet",
         "quick",
+        "snack",
+        "spicy",
+        "salad",
+        "healthy"
       ],
     },
     calories: {

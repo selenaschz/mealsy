@@ -97,20 +97,34 @@ module.exports.list = (req, res, next) => {
   }
 
   const criterial = {};
-  if (name) criterial.name = new RegExp(name, "i"); // Case-insensitive
-  if (cuisine) criterial.cuisine = cuisine;
-  if (tags) criterial.tags = { $in: tags.split(",") }; // Includes if the value matches any of the enum values.
-  if (duration) criterial.duration = { $lte: Number(duration) }; // Duration less than or equal
-  if (ingredients) {
-    const ingredientsList = ingredients.split(","); // to array
-    criterial["ingredients.ingredient"] = { $in: ingredientsList };
-  }
+  // if (name) criterial.name = new RegExp(name, "i"); // Case-insensitive
+  // if (cuisine) criterial.cuisine = { $in: req.query.cuisine.split(",") };
+  // if (tags) criterial.tags = { $in: tags.split(",") }; // Includes if the value matches any of the enum values.
+  // if (ingredients) {
+  //   const ingredientsList = ingredients.split(","); // to array
+  //   criterial["ingredients.ingredient"] = { $in: ingredientsList };
+  // }
+
+  // if (duration) {
+  //   const [minDuration, maxDuration] = duration.split(",").map(Number);
   
-  if (caloriesMin || caloriesMax) {
-    criterial.calories = {};
-    if (caloriesMin) criterial.calories.$gte = Number(caloriesMin); 
-    if (caloriesMax) criterial.calories.$lte = Number(caloriesMax);
-  }
+  //   if (!Number.isNaN(minDuration) && !Number.isNaN(maxDuration)) {
+  //     criterial.duration = { $gte: minDuration, $lte: maxDuration };
+  //   } else {
+  //     return next(
+  //       createError(400, {
+  //         message: "Invalid query parameter",
+  //         errors: { duration: "Must be a valid range (e.g., 0,600)" },
+  //       })
+  //     );
+  //   }
+  // }
+  
+  // if (caloriesMin || caloriesMax) {
+  //   criterial.calories = {};
+  //   if (caloriesMin) criterial.calories.$gte = Number(caloriesMin); 
+  //   if (caloriesMax) criterial.calories.$lte = Number(caloriesMax);
+  // }
 
   // Find dishes filtering by criterials
   Dish.find(criterial)
@@ -140,6 +154,12 @@ module.exports.createReview = (req, res, next) => {
   const user = req.user.id;
   const dish = req.params.id;
 
+   // Check if the user has write a comment
+   Review.findOne({ where: { user, dish } })
+      .then(existingReview => {
+        if (existingReview) return res.status(400).json({ message: "You have already written a review for this dish." });
+      })
+     
   Review.create({
     text,
     rating,
